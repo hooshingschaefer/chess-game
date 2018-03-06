@@ -1,132 +1,123 @@
-/*//game.print_board();
-         string line;
-         //smatch match;
-         getline(cin, line);
-         if (cin.eof()){
-            break;
-         }
-         //dispatch to game to print board, do players move, check validity...
-         game.play_set(line, p1_is_black);/*
-         //move(string command, bool black_player)
-         game.move(line, p1_is_black);
-         game.print_board();
-         game.moveAI(p1_is_black);
-         game.print_board();*/
-
-#include <regex>
+// Hooshing Schaefer hschaefe@ucsc.edu
+//#include <regex>
 #include <iostream>         
 #include <string> 
+#include <cstdlib>
+//#include <exception>
+#include <iostream>
+#include <string>
+#include <unistd.h>
+
+//#include "util.h"
+#include "chesspieces.h"
 
 using namespace std;         
 
-class game{
-   friend class chess_piece;
-   private:
-      
-      print_board();
-      bool p1b; 
-      //want to add feature "knight to e4" and automatically detect which 
-      //knight is being referred to
-      move(string );
-      moveAI();
-      chess_piece board[8][8];
-   public:
-      game(bool);
-      play_set(string);
-}
 
+//setup game board to pieces in their proper position
 game::game(bool p1bl){
    p1b = p1bl;
-   board[0][0] = rook(false);
-   board[0][1] = knight(false);
-   board[0][2] = bishop(false);
-   board[0][3] = queen(false);
-   board[0][4] = king(false);
-   board[0][5] = bishop(false);
-   board[0][6] = knight(false);
-   board[0][7] = rook(false);
+   board[0][0] = rook(0,0,1);
+   board[0][1] = knight(0,1,1);
+   board[0][2] = bishop(0,2,1);
+   board[0][3] = queen(0,3,1);
+   board[0][4] = king(0,4,1);
+   board[0][5] = bishop(0,5,1);
+   board[0][6] = knight(0,6,1);
+   board[0][7] = rook(0,7,1);
 
-   board[1][0] = pawn(false);
-   board[1][1] = pawn(false);
-   board[1][2] = pawn(false);
-   board[1][3] = pawn(false);
-   board[1][4] = pawn(false);
-   board[1][5] = pawn(false);
-   board[1][6] = pawn(false);
-   board[1][7] = pawn(false);
+   board[1][0] = pawn(1,0,1);
+   board[1][1] = pawn(1,1,1);
+   board[1][2] = pawn(1,2,1);
+   board[1][3] = pawn(1,3,1);
+   board[1][4] = pawn(1,4,1);
+   board[1][5] = pawn(1,5,1);
+   board[1][6] = pawn(1,6,1);
+   board[1][7] = pawn(1,7,1);
 
-   board[6][0] = pawn(true);
-   board[6][1] = pawn(true);
-   board[6][2] = pawn(true);
-   board[6][3] = pawn(true);
-   board[6][4] = pawn(true);
-   board[6][5] = pawn(true);
-   board[6][6] = pawn(true);
-   board[6][7] = pawn(true);
+   board[6][0] = pawn(6,0,0);
+   board[6][1] = pawn(6,1,0);
+   board[6][2] = pawn(6,2,0);
+   board[6][3] = pawn(6,3,0);
+   board[6][4] = pawn(6,4,0);
+   board[6][5] = pawn(6,5,0);
+   board[6][6] = pawn(6,6,0);
+   board[6][7] = pawn(6,7,0);
 
-   board[7][0] = rook(true);
-   board[7][1] = knight(true);
-   board[7][2] = bishop(true);
-   board[7][3] = queen(true);
-   board[7][4] = king(true);
-   board[7][5] = bishop(true);
-   board[7][6] = knight(true);
-   board[7][7] = rook(true);
+   board[7][0] = rook(7,0,0);
+   board[7][1] = knight(7,1,0);
+   board[7][2] = bishop(7,2,0);
+   board[7][3] = queen(7,3,0);
+   board[7][4] = king(7,4,0);
+   board[7][5] = bishop(7,5,0);
+   board[7][6] = knight(7,6,0);
+   board[7][7] = rook(7,7,0);
 
    print_board();
-
+   //after making the board, if the human player is black, let the computer move for white
    if (p1b){
       moveAI();
       print_board();
 
    }
 }
-void game::play_set(string player_move){
+
+//first tries the player move, if successful then ai moves
+void game::play_set(const string& player_move){
+   //move returns whether or not the player's move was valid
    if (move(player_move)){
+      print_board();
       moveAI();
+      print_board();
    }else{
       cout << "invalid move" << endl;
    }
 }
+
+
 void game::print_board(){
-   
+   string bord = "+---+---+---+---+---+---+---+---+";
+   for (int i = 0; i < 8; ++i)
+   {
+      cout << bord << endl;
+      for (int j = 0; j < 8; ++i)
+      {
+         cout <<"| " <<board[i][j];
+      }
+      cout <<"|" <<endl;
+   }
+   cout << bord << endl;
 }
-/*
---+--+--+--+--+--+--+--+--+
-wp|bb|bq|wp|bb|bq|wp|bb|bq|
---+--+--+--+--+--+--+--+--+
 
----+---+---|---+---+---+---+---+---+
- wp| bb| bq| wp| bb| bq|   | bb| bq|
----+---+---|---|---|---+---+---+---+
- wp| bb|w p| wp| bb| bq| bQ| bb| bq|
----+---|---|---|---|---+---+---+---+
- wp| bb| bq| wp|   | bq| wp| bb| bq|
----+---+---|---|---|---+---+---+---+
- wp| bb| bq| wp| bb| bq| wp| bb| bq|
----+---+---|---|---+---+---+---+---+*/
 
-/*player movement
+/*player movement function.
   first tests the args passed in
   then forwards the move to the chesspiece
   cp tries the move and returns result
-
 */
-bool move(const string& str){
+bool game::move(const string& str){
    //to better improve move registering
    //regex four_num {R"(^[^[:digit:]]*([:digit:]+)[^[:digit:]]+([:digit:]+)[^[:digit:]]+([:digit:]+)[^[:digit:]]*$)"};
+   
+   //split along spaces as well as commas
    vector<string> v = split(str, " ,");
 
    //if 4 ints arent specified then the move is invalid. let piece try the move and return if it fails
    if (v.size() != 4){
-      return 1;
+      return false;
    }else{
-      chess_piece& cp = board[stoi(v[0])][stoi(v[1])];
-      return cp.move(!p1b, stoi(v[2]), stoi(v[3]));
+      chess_piece cp = board[stoi(v[0])][stoi(v[1])];
+      if ( cp.is_valid_move( stoi(v[2]), stoi(v[3]) ) ){
+         cp.move(r,c);
+         return true;
+      }
+      return false;
    }
 
 }
 
----------------------------
+void game::moveAI(){
+   //do nothing for now
 
-//cp util from asg2
+}
+
