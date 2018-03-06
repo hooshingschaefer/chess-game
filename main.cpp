@@ -26,34 +26,30 @@ int main (int argc, char** argv) {
    else p1_black = false;
 
 
-  // string filename;
-   //ifstream infile; 
-   //str_str_map map;
-   //initialize game object call functions on this object in main
+   //initialize game object
    chessgame game(p1_black);
 
-   //int linenum = 1;
-      for(;;) {
-         //game.print_board();
-         string line;
-         //smatch match;
-         getline(cin, line);
-         if (cin.eof()){
-            break;
-         }
-         //dispatch to game to print board, do players move, check validity...
-         game.play_set(line);
-         
-      }
-
    
+    for(;;) {
+       //game.print_board();
+       string line;
+       //smatch match;
+       getline(cin, line);
+       if (cin.eof()){
+          break;
+       }
+       //dispatch to game to print board, do players move, check validity...
+       game.play_set(line);
+       
+    }
+
    return exitstat;
 }
 
 
 
 
-void print_intro(){
+void print_intro() const{
    cout << "Welcome to cHess" << endl
         <<"to play as black, type in \"black\" or \"b\""
         << "to play as white type in anything else" << endl;
