@@ -1,5 +1,5 @@
-# $Id: Makefile,v 1.20 2018-01-31 18:30:15-08 - - $
-#Hooshing Schaefer hschaefe@ucsc.edu
+
+# Hooshing Schaefer hschaefe@ucsc.edu
 
 MKFILE      = Makefile
 DEPFILE     = ${MKFILE}.dep
@@ -10,15 +10,15 @@ GMAKE       = ${MAKE} --no-print-directory
 COMPILECPP  = g++ -std=gnu++17 -g -O0 -Wall -Wextra -Wold-style-cast
 MAKEDEPCPP  = g++ -std=gnu++17 -MM
 
-MODULES     = listmap xless xpair debug util main
+MODULES     = chesspiece game util main
 CPPSOURCE   = ${wildcard ${MODULES:=.cpp}}
 OBJECTS     = ${CPPSOURCE:.cpp=.o}
 SOURCELIST  = ${foreach MOD, ${MODULES}, ${MOD}.h ${MOD}.tcc ${MOD}.cpp}
 ALLSOURCE   = ${wildcard ${SOURCELIST}}
-EXECBIN     = keyvalue
+EXECBIN     = chessgame
 OTHERS      = ${MKFILE} ${DEPFILE}
 ALLSOURCES  = ${ALLSOURCE} ${OTHERS}
-LISTING     = Listing.ps
+
 
 all : ${EXECBIN}
 
