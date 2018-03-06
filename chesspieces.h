@@ -11,7 +11,7 @@
 //#include "util.h"
 
 class chess_piece{
-	virtual friend ostream& operator<< (ostream&, const chess_piece&) = 0;
+	//virtual friend ostream& operator<< (ostream&, const chess_piece&) = 0;
 	friend class game;
    private:
       bool isb;
@@ -25,42 +25,42 @@ class chess_piece{
 
 class rook: chess_piece{
 public:
-   ostream& operator<< (ostream&, const chess_piece&) = override;
-   rook(bool) = override;
+   friend ostream& operator<< (ostream&, const chess_piece&);
+   rook(int, int,bool) = override;
    bool is_valid_move(int r, int c);
 }
 
 class bishop: chess_piece{
 public:
-   ostream& operator<< (ostream&, const chess_piece&) = override;
-   rook(bool) = override;
+   friend ostream& operator<< (ostream&, const chess_piece&) ;
+   bishop(int, int, bool) = override;
    bool is_valid_move(int r, int c);
 }
 
 class knight: chess_piece{
 public:
-   ostream& operator<< (ostream&, const chess_piece&) = override;
-   rook(bool) = override;
+   friend ostream& operator<< (ostream&, const chess_piece&) ;
+   knight(int, int,bool) = override;
    bool is_valid_move(int r, int c);
 }
 
 class queen: chess_piece{
 public:
-   ostream& operator<< (ostream&, const chess_piece&) = override;
-   rook(bool) = override;
+   friend ostream& operator<< (ostream&, const chess_piece&) ;
+   queen(int, int,bool) = override;
    bool is_valid_move(int r, int c);
 }
 
 class king: chess_piece{
 public:
-   ostream& operator<< (ostream&, const chess_piece&) = override;
-   rook(bool) = override;
+   friend ostream& operator<< (ostream&, const chess_piece&) ;
+   king(int, int,bool) = override;
    bool is_valid_move(int r, int c);
 }
 
 class pawn: chess_piece{
 public:
-   ostream& operator<< (ostream&, const chess_piece&) = override;
-   rook(bool) = override;
+   friend ostream& operator<< (ostream&, const chess_piece&);
+   pawn(int, int, bool) = override;
    bool is_valid_move(int r, int c);
 }

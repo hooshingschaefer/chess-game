@@ -14,8 +14,8 @@ class game{
       //knight is being referred to
       bool move(const string&);
       void moveAI();
-      chess_piece board[8][8];
+      board chess_piece[8][8];
    public:
       game(bool);
-      void play_set(string);
+      void play_set(const string&);
 }

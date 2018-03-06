@@ -8,7 +8,7 @@
 #include <string>
 #include <unistd.h>
 
-//#include "util.h"
+#include "util.h"
 #include "chesspieces.h"
 
 using namespace std;         
@@ -75,7 +75,7 @@ void game::play_set(const string& player_move){
 }
 
 
-void game::print_board(){
+void game::print_board() const{
    string bord = "+---+---+---+---+---+---+---+---+";
    for (int i = 0; i < 8; ++i)
    {
@@ -107,7 +107,9 @@ bool game::move(const string& str){
       return false;
    }else{
       chess_piece cp = board[stoi(v[0])][stoi(v[1])];
-      if ( cp.is_valid_move( stoi(v[2]), stoi(v[3]) ) ){
+      int r = stoi(v[2]);
+      int c = stoi(v[3]);
+      if (cp.is_valid_move(r, c) ){
          cp.move(r,c);
          return true;
       }
