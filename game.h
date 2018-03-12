@@ -8,19 +8,7 @@ class chess_piece;
 #include "chesspieces.h"
 //#include "util.h"
 using namespace std;         
-//using wordvec = vector<string>;
 using cp_ptr = chess_piece*;
-/*struct chp {
-      friend ostream& operator<<(ostream os, chp cs);
-   public:
-      chp(): ptr( nullptr){}
-      chp(cp_ptr a){ptr = move(a);}
-   //private:
-      operator bool()const {return ptr != nullptr;}
-      cp_ptr ptr;
-}
-*/
-
 class cboard{
    private:
       cp_ptr board[8][8];
@@ -34,14 +22,10 @@ class cboard{
 
 
 class game{
-   //friend class chess_piece;
    public:
-      //~game();
       game(bool);
-      //void print_board() const;
       //want to add feature "knight to e4" and automatically detect which 
       //knight is being referred to
-      //cp_ptr board[8][8];
       cboard cb{};
       void play_set(const string&);
    private:

@@ -11,14 +11,14 @@
 #include <unistd.h> 
 #include <math.h>
 
+
 #include "game.h"
 #include "chesspieces.h"
 using namespace std;
 
-//chess_piece board[8][8];
 
 bool chess_piece::is_valid_move(int r, int c){
-	return  !(r < 0 or r >= 8 or c < 0 or c >= 8);// return false;
+	return  !(r < 0 or r >= 8 or c < 0 or c >= 8);
         
 }
 bool pawn::is_valid_move(int row, int col, int r, int c){
@@ -138,26 +138,4 @@ ostream& operator<< (ostream& os, const chess_piece& cp){
 	else os << "w";
 	return os << cp.ts() ;
 }
-/*
-void chess_piece::move(int r, int c){
-	game::board[r][c] = *this;
-	row = r;
-	col = c;
-}
-chess_piece::chess_piece(): row(-1), col (-1){}
-
-chess_piece::operator bool() const {
-	return row >=0;
-
-}
-*/
-
-
-
-/*string chess_piece::ts()const{
-	if (isb) return "b";
-	else return "w";
-//	return "   ";
-}*/
-
 

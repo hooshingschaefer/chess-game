@@ -38,9 +38,7 @@ int main (int argc, char** argv) {
 
    
     for(;;) {
-       //game.print_board();
        
-       //smatch match;
        getline(cin, str);
        if (cin.eof()){
           break;

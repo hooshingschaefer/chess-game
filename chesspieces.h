@@ -1,5 +1,4 @@
 // Hooshing Schaefer hschaefe@ucsc.edu
-//chesspiece::move(bool this_player is black?, row, col)
 #ifndef CP_H
 #define CP_H
 #include <iostream>
@@ -19,15 +18,9 @@ class chess_piece{
       bool isb;
       cboard* board;
    public:
-      //abstract class
       bool isbl()const {return isb;}
-      //game* g = nullptr;
-      //chess_piece() = delete;
-      //chess_piece(int row, int col, bool isb): row(row), col(col), isb(isb){}
       virtual bool is_valid_move(int row, int col, int r, int c) =0;
-      virtual string ts()const = 0 ;//{return "";}
-      //operator bool()const ;
-      //void move(int r, int c);
+      virtual string ts()const = 0 ;
       virtual ~chess_piece() {}
       friend ostream& operator<< (ostream&, const chess_piece&) ;
 };
@@ -36,7 +29,6 @@ class chess_piece{
 
 class rook: public chess_piece{
 public:
-   //friend ostream& operator<< (ostream&, const chess_piece&);
    rook(bool b): chess_piece(b){}
    rook(bool b, cboard* ptr): chess_piece(b, ptr){}
 
@@ -47,7 +39,6 @@ public:
 
 class bishop:public chess_piece{
 public:
-   //friend ostream& operator<< (ostream&, const chess_piece&) ;
    bishop(bool b): chess_piece(b){}
    bishop(bool b, cboard* ptr): chess_piece(b, ptr){}
    bool is_valid_move(int ir, int ic, int r, int c);
@@ -58,7 +49,6 @@ public:
 
 class knight: public chess_piece{
 public:
-  // friend ostream& operator<< (ostream&, const chess_piece&) ;
    knight(bool b): chess_piece(b){}
    knight(bool b, cboard* ptr): chess_piece(b, ptr){}
    bool is_valid_move(int ir, int ic, int r, int c);
@@ -68,7 +58,6 @@ public:
 
 class queen: public chess_piece{
 public:
-   //friend ostream& operator<< (ostream&, const chess_piece&) ;
    queen(bool b) : chess_piece(b){}
    queen(bool b, cboard* ptr) : chess_piece(b, ptr){}
    bool is_valid_move(int ir, int ic, int r, int c);
@@ -78,7 +67,6 @@ public:
 
 class king:public chess_piece{
 public:
-  // friend ostream& operator<< (ostream&, const chess_piece&) ;
    king(bool b) : chess_piece(b){}
    king(bool b, cboard* ptr) : chess_piece(b, ptr){}
    bool is_valid_move(int ir, int ic, int r, int c);
@@ -88,7 +76,6 @@ public:
 
 class pawn: public chess_piece{
 public:
-  // friend ostream& operator<< (ostream&, const chess_piece&);
    pawn(bool b):chess_piece(b){}
    pawn(bool b, cboard* ptr):chess_piece(b, ptr){}
    bool is_valid_move(int ir, int ic, int r, int c);
