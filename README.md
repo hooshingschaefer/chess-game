@@ -1,2 +1,2 @@
 # chess-game
-working on getting the game to work
+pieces correctly identify invalid moves. next step is to get check/checkmate/end of game to work
