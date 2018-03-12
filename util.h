@@ -1,10 +1,10 @@
-
-#include <iostream>         
-#include <string> 
+#ifndef UTIL_H
+#define UTIL_H
 #include <cstdlib>
-//#include <exception>
 #include <iostream>
+#include <vector>
 #include <string>
-#include <unistd.h>
+using namespace std;
 using wordvec = vector<string>;
 wordvec split (const string&, const string&);
+#endif

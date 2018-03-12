@@ -1,13 +1,13 @@
-#include <util.h>
-#include <iostream>         
+//#include <iostream>         
 #include <string> 
-#include <cstdlib>
+///#include <cstdlib>
 //#include <exception>
 #include <iostream>
 #include <string>
-#include <unistd.h>
-
-
+#include <vector>
+//#include <unistd.h>
+using namespace std;
+using wordvec = vector<string>;
 wordvec split (const string& line, const string& delimiters) {
    wordvec words;
    size_t end = 0;

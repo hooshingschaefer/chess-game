@@ -1,66 +1,98 @@
 // Hooshing Schaefer hschaefe@ucsc.edu
 //chesspiece::move(bool this_player is black?, row, col)
-#include <iostream>         
-#include <string> 
-#include <cstdlib>
+#ifndef CP_H
+#define CP_H
 #include <iostream>
 #include <string>
-#include <unistd.h> 
-
+#include <vector>
 #include "game.h"
-//#include "util.h"
 
+
+using namespace std;
+class cboard;
 class chess_piece{
-	//virtual friend ostream& operator<< (ostream&, const chess_piece&) = 0;
-	friend class game;
    private:
+   protected:
+      chess_piece(bool b):isb(b){}
+      chess_piece(bool b, cboard* ptr):isb(b), board(ptr){}
+      bool is_valid_move(int r, int c);
       bool isb;
-      int row, col;
+      cboard* board;
    public:
-      virtual chess_piece(int row, int col, bool isb) = 0;
-      virtual bool is_valid_move(int r, int c);
-      void move(int r, int c);
+      //abstract class
+      bool isbl()const {return isb;}
+      //game* g = nullptr;
+      //chess_piece() = delete;
+      //chess_piece(int row, int col, bool isb): row(row), col(col), isb(isb){}
+      virtual bool is_valid_move(int row, int col, int r, int c) =0;
+      virtual string ts()const = 0 ;//{return "";}
+      //operator bool()const ;
+      //void move(int r, int c);
+      virtual ~chess_piece() {}
+      friend ostream& operator<< (ostream&, const chess_piece&) ;
+};
 
-}
 
-class rook: chess_piece{
+
+class rook: public chess_piece{
 public:
-   friend ostream& operator<< (ostream&, const chess_piece&);
-   rook(int, int,bool) = override;
-   bool is_valid_move(int r, int c);
-}
+   //friend ostream& operator<< (ostream&, const chess_piece&);
+   rook(bool b): chess_piece(b){}
+   rook(bool b, cboard* ptr): chess_piece(b, ptr){}
 
-class bishop: chess_piece{
-public:
-   friend ostream& operator<< (ostream&, const chess_piece&) ;
-   bishop(int, int, bool) = override;
-   bool is_valid_move(int r, int c);
-}
+   bool is_valid_move(int ir, int ic, int r, int c);
+   string ts() const override{return "r";}
+   ~rook() = default;
+};
 
-class knight: chess_piece{
+class bishop:public chess_piece{
 public:
-   friend ostream& operator<< (ostream&, const chess_piece&) ;
-   knight(int, int,bool) = override;
-   bool is_valid_move(int r, int c);
-}
+   //friend ostream& operator<< (ostream&, const chess_piece&) ;
+   bishop(bool b): chess_piece(b){}
+   bishop(bool b, cboard* ptr): chess_piece(b, ptr){}
+   bool is_valid_move(int ir, int ic, int r, int c);
+   string ts()const{return "b";}
+   ~bishop() = default;
 
-class queen: chess_piece{
-public:
-   friend ostream& operator<< (ostream&, const chess_piece&) ;
-   queen(int, int,bool) = override;
-   bool is_valid_move(int r, int c);
-}
+};
 
-class king: chess_piece{
+class knight: public chess_piece{
 public:
-   friend ostream& operator<< (ostream&, const chess_piece&) ;
-   king(int, int,bool) = override;
-   bool is_valid_move(int r, int c);
-}
+  // friend ostream& operator<< (ostream&, const chess_piece&) ;
+   knight(bool b): chess_piece(b){}
+   knight(bool b, cboard* ptr): chess_piece(b, ptr){}
+   bool is_valid_move(int ir, int ic, int r, int c);
+   string ts()const{return "n";}
+   ~knight() = default;
+};
 
-class pawn: chess_piece{
+class queen: public chess_piece{
 public:
-   friend ostream& operator<< (ostream&, const chess_piece&);
-   pawn(int, int, bool) = override;
-   bool is_valid_move(int r, int c);
-}
+   //friend ostream& operator<< (ostream&, const chess_piece&) ;
+   queen(bool b) : chess_piece(b){}
+   queen(bool b, cboard* ptr) : chess_piece(b, ptr){}
+   bool is_valid_move(int ir, int ic, int r, int c);
+   string ts()const{return "q";}
+   ~queen() = default;
+};
+
+class king:public chess_piece{
+public:
+  // friend ostream& operator<< (ostream&, const chess_piece&) ;
+   king(bool b) : chess_piece(b){}
+   king(bool b, cboard* ptr) : chess_piece(b, ptr){}
+   bool is_valid_move(int ir, int ic, int r, int c);
+   string ts()const{return "k";}
+   ~king() = default;
+};
+
+class pawn: public chess_piece{
+public:
+  // friend ostream& operator<< (ostream&, const chess_piece&);
+   pawn(bool b):chess_piece(b){}
+   pawn(bool b, cboard* ptr):chess_piece(b, ptr){}
+   bool is_valid_move(int ir, int ic, int r, int c);
+   string ts()const{return "p";}
+   ~pawn() = default;
+};
+#endif
