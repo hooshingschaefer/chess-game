@@ -10,7 +10,7 @@ GMAKE       = ${MAKE} --no-print-directory
 COMPILECPP  = g++ -std=gnu++17 -g -O0 -Wall -Wextra -Wold-style-cast
 MAKEDEPCPP  = g++ -std=gnu++17 -MM
 
-MODULES     = chesspiece game util main
+MODULES     = chesspieces game util main
 CPPSOURCE   = ${wildcard ${MODULES:=.cpp}}
 OBJECTS     = ${CPPSOURCE:.cpp=.o}
 SOURCELIST  = ${foreach MOD, ${MODULES}, ${MOD}.h ${MOD}.tcc ${MOD}.cpp}
@@ -38,10 +38,9 @@ clean :
 	- rm ${OBJECTS} ${DEPFILE} core
 
 spotless : clean
-	- rm ${EXECBIN} ${LISTING} ${LISTING:.ps=.pdf}
+	- rm ${EXECBIN} 
 
 dep : ${ALLCPPSRC}
-	@ echo "# ${DEPFILE} created `LC_TIME=C date`" >${DEPFILE}
 	${MAKEDEPCPP} ${CPPSOURCE} >>${DEPFILE}
 
 ${DEPFILE} :
