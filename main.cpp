@@ -17,6 +17,10 @@ void print_intro() {
    cout << "Welcome to cHesS" << endl
         <<"to play as black, type in \"black\" or \"b\","<<endl
         << "to play as white type in anything else" << endl;
+         cout << "to forfeit/quit type \"q\" or \"ff\"" << endl;
+   cout<< "to move, type the row and col of the piece to be moved" << endl
+   << "followed by the row and col of the destination" << endl
+   << "for example, white's first move could be \"6 0 4 0\"" << endl; 
 
 }
 
@@ -40,7 +44,7 @@ int main (int argc, char** argv) {
     for(;;) {
        
        getline(cin, str);
-       if (cin.eof()){
+       if (cin.eof() or str == "q" or str =="ff"){
           break;
        }
        //dispatch to game to print board, do players move, check validity...
