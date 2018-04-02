@@ -7,7 +7,7 @@
 #include "chesspieces.h"
 #include "game.h"
 using namespace std;         
-using cp_ptr = chess_piece*;
+//using cp_ptr = chess_piece*;
 
 cboard::cboard(){
    board[0][0] = new rook(1, this);
@@ -34,14 +34,13 @@ cboard::cboard(){
          board[i][j] = new pawn(i%2==1, this);
       }
    }
+
    for(int i = 2; i != 6; i++){
       for(int j = 0; j != 8; j++){
          board[i][j] = nullptr;
       }
    }
-
-
-   }
+}
 
 game::game(bool b): p1b(b){
    cb.print_board();
@@ -51,6 +50,7 @@ game::game(bool b): p1b(b){
       cb.print_board();
    }
 }
+
 cboard::~cboard(){
    for(int i =0; i !=8; i++){
       for(int j = 0; j != 8; j++){
@@ -130,9 +130,55 @@ void cboard::movep(int row, int col, int r, int c){
    board[row][col] = nullptr;
 }
 
-void game::moveAI(){
-   //do nothing for now
-   cout << "ai moving..."<< endl;
+
+void printvec(coords& c){
+   for (coord x: c){
+      cout << "row: " << x.row << " col: " << x.col << endl;
+   }
 }
 
+void game::moveAI(){
+   //any move beats this one
+   move_set best_move{ -1, {} };
 
+
+   for (int i =0 ; i < 8; i++){
+      for (int j =0 ; j < 8; j++){
+         cp_ptr cp = cb.at(i,j);
+         if (cp != nullptr and cp->isbl() != p1b){
+            cout << "found moveable piece at " << i << ","<< j << endl;//db
+            move_set ms = cp->find_best_moves({i,j}, {}, 1);
+            printvec(ms.moves);//db
+            cout << endl;//db
+            if (ms.val > best_move.val and ms.moves.size() > 1){
+               best_move = ms;
+            }
+         } 
+      }
+   }
+   //ai will always have to move as long as this function is called
+   //if there are no pieces to move then the game is over anyways.
+   cb.movep (best_move.moves[0].row, best_move.moves[0].col, best_move.moves[1].row, best_move.moves[1].col);
+  // cout <<"value: " <<  best_move.val <<endl << "move vector: " ;
+   //printvec(best_move.moves);
+   //cout <<"best move: " <<best_move.moves[0].row<< best_move.moves[0].col<< best_move.moves[1].row
+    //<< best_move.moves[1].col<< endl; //best_move.moves[0].row<< best_move.moves[0].col<<endl;
+}
+/*
+struct move_tuple{
+   //arr holds the i,j of the piece and the row and col that is the "best" move 
+   int arr[4];
+   //eval is the score of the particular move, determined heuristically
+   int eval;
+};
+
+*/
+
+
+//need to define what a good move is
+//put a value on different pieces
+//protect friendly pieces, set up favorable trades
+//move to attack opponent whats the timeframe?
+//
+//
+//search for the best move. alpha beta pruning? store moves? 

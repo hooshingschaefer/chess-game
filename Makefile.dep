@@ -1,0 +1,4 @@
+chesspieces.o: chesspieces.cpp game.h chesspieces.h
+game.o: game.cpp util.h chesspieces.h game.h
+util.o: util.cpp
+main.o: main.cpp game.h

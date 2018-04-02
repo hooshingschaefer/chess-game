@@ -5,10 +5,31 @@
 #include <string> 
 #include <vector>
 class chess_piece;
-#include "chesspieces.h"
+//#include "chesspieces.h"
 //#include "util.h"
 using namespace std;         
 using cp_ptr = chess_piece*;
+
+
+//POD of a space on the board
+struct coord{
+   int row;
+   int col;
+};
+
+using coords = vector<coord>;
+
+
+//a set of coordinates (moves) and their relative strength in terms of how good the set of moves is
+//val is a quantification of the move set and the vector of coordinates is the optimal set of moves
+struct move_set {
+   int val;
+   coords moves;
+};
+
+void printvec (coords&);
+
+
 class cboard{
    private:
       cp_ptr board[8][8];
@@ -21,6 +42,9 @@ class cboard{
 };
 
 
+
+
+//a class to handle the control of the game. dispatches function calls to chesspieces
 class game{
    public:
       game(bool);
